@@ -1,5 +1,4 @@
 "use client"
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import getStripe from "@/utils/get-stripe";
 import { AppBar, Button, Container, Toolbar, Typography, Box, Grid } from "@mui/material"
 import { SignedIn, SignedOut, UserButton, } from "@clerk/nextjs";
@@ -48,7 +47,7 @@ export default function Home() {
       <Box>
         <Typography variant="h2" gutterBottom>Welcome to FLASHCARD SAAS</Typography>
         <Typography variant="h5" gutterBottom>{''} The easiest way to create flashcardb     </Typography>
-        <Button variant="contained" color="primary" sx={{ mt: 2 }}>Get Started</Button>
+        <Button variant="contained" color="primary" sx={{ mt: 2 }} href="/generate">Get Started</Button>
       </Box>
       <Box sx={{ my: 6 }}>
         <Typography variant="h4" gutterBottom >

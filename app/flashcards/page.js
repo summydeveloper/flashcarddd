@@ -76,13 +76,9 @@ export default function FlashCards() {
       const docRef = doc(collection(db, 'users'), user.id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        const collections = docSnap.data().flashCards || [];
-        if (Array.isArray(collections)) {
-          setFlashCards(collections);
+        const collections = docSnap.data().flashCardsSets || [];
+           setFlashCards(collections);
         } else {
-          console.error('Unexpected data format for flashCards:', collections);
-        }
-      } else {
         await setDoc(docRef, { flashCards: [] });
       }
     }
@@ -90,7 +86,7 @@ export default function FlashCards() {
   }, [user]);
 
   if (!isLoaded || !isSignedIn) {
-    return <></>;
+    return <p>not signed in</p>;
   }
 
   const handleCardClick = (id) => {
@@ -103,7 +99,7 @@ export default function FlashCards() {
         {flashCards.map((flashcard, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Card>
-              <CardActionArea onClick={() => handleCardClick(flashcard.id)}>
+              <CardActionArea onClick={() => handleCardClick(flashcard.name)}>
                 <CardContent>
                   <Typography variant="h6">
                     {flashcard.name}

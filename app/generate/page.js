@@ -35,45 +35,37 @@ export default function Generate() {
     const handleClose = () => {
         setOpen(false)
     }
-    const saveFlashCards = async () => {
-        if (!name) {
-            alert("please enter a name")
+ 
+    const saveFlashCards= async ()=>{
+        if(!name){
+            alert('please enter a name for your flashcard')
             return
         }
+        try{
+            const userDocRef = doc(collection(db, 'users'), user.id)
+            const userDocSnap= await getDoc(userDocRef)
 
-        const batch = writeBatch(db)
-        const userDocRef = doc(collection(db, "users"), user.id)
-        const docSnap = await getDoc(userDocRef)
+            const batch = writeBatch(db)
 
-        if (docSnap.exists()) {
-            const collections = docSnap.data().flashcards || []
-            if (collections.find((f) => f.name === name)) {
-                alert('flashcard colection with the same name already exists')
-                return
-            } else {
-                collections.push({ name })
-                batch.set(userDocRef, { flashCards: collections }, { merge: true })
+            if(userDocSnap.exists()){
+                const userData = userDocSnap.data()
+                const updatedSets = [...(userData.flashCardsSets || []),{name: name}]
+                batch.update(userDocRef, {flashCardsSets: updatedSets})
+            }else{
+                batch.set(userDocRef, {flashCardsSets:[{name: name,}]})
             }
-
-        } else {
-            batch.set(userDocRef, { flashCards: { name } })
-
-        }
-        const colRef = collection(userDocRef, name)
-        flashCards.forEach((flashcard) => {
-            const cardDocRef = doc(colRef)
-            batch.set(cardDocRef, flashcard)
-        })
-
-
-        await batch.commit()
-
-        alert('Flashcards saved successfully!')
-        handleClose()
+            const setDocRef = doc(collection(userDocRef, 'flashCardsSets'), name)
+            batch.set(setDocRef,{flashCards})
+            await batch.commit()
+            alert('Flashcards saved successfully!')
+            handleClose()
         router.push('/flashcards')
-
+            setName()
+        }catch(error){
+            console.error('Error saving flashcards:', error)
+            alert('An error occurred while saving flashcards. Please try again.')
+        }
     }
-
     return (
         <Container>
             <Box sx={{
