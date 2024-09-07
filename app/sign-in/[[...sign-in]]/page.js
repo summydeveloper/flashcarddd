@@ -1,9 +1,9 @@
-import { SignIn } from "@clerk/nextjs";
+import { ClerkProvider, SignIn } from "@clerk/nextjs";
 import { AppBar, Button, Container, Toolbar, Typography , Box} from "@mui/material";
 import Link from "next/link";
 
 export default function SignupPage(){
-    return (
+    return (<ClerkProvider>
         <Container maxWidth="100vw">
             <AppBar position="static" sx={{backgroundColor:"#3f151bf" }}>
                 <Toolbar>
@@ -20,6 +20,6 @@ export default function SignupPage(){
                     <SignIn/>
             </Box>
 
-        </Container>
+        </Container> </ClerkProvider>
     );
 }
