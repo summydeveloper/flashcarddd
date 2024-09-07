@@ -3,7 +3,7 @@ import { AppBar, Button, Container, Toolbar, Typography , Box} from "@mui/materi
 import Link from "next/link";
 
 export default function SignupPage(){
-    return (<ClerkProvider>
+    return ( 
         <Container maxWidth="100vw">
             <AppBar position="static" sx={{backgroundColor:"#3f151bf" }}>
                 <Toolbar>
@@ -20,6 +20,6 @@ export default function SignupPage(){
                     <SignIn/>
             </Box>
 
-        </Container> </ClerkProvider>
+        </Container>  
     );
 }

@@ -1,4 +1,5 @@
 "use client";
+
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { db } from "@/firebase";
@@ -53,16 +54,27 @@ export default function Flashcard() {
     };
 
     if (!isLoaded || !isSignedIn) {
-        return <p>Not signed in</p>;
+        return <Typography variant="h6" align="center">Not signed in</Typography>;
     }
 
     return (
-        <Container maxWidth="100vw">
-            <Grid container spacing={3} sx={{ mt: 4 }}>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 6 }}>
+            <Typography variant="h4" component="h1" align="center" gutterBottom>
+                Your Flashcards
+            </Typography>
+            <Grid container spacing={4}>
                 {flashcards.length > 0 ? (
                     flashcards.map((flashcard, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
-                            <Card>
+                            <Card sx={{
+                                borderRadius: '8px',
+                                boxShadow: '0 6px 12px rgba(0,0,0,0.1)',
+                                transition: 'transform 0.3s, box-shadow 0.3s',
+                                '&:hover': {
+                                    transform: 'translateY(-8px)',
+                                    boxShadow: '0 12px 24px rgba(0,0,0,0.2)',
+                                }
+                            }}>
                                 <CardActionArea onClick={() => handleCardClick(index)}>
                                     <CardContent>
                                         <Box sx={{
@@ -73,7 +85,8 @@ export default function Flashcard() {
                                                 position: 'relative',
                                                 width: '100%',
                                                 height: '200px',
-                                                boxShadow: '0 4px 8px 0 rgba(0,0,0, 0.2)',
+                                                boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                                                borderRadius: '8px',
                                                 transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
                                             },
                                             '& > div > div': {
@@ -81,11 +94,13 @@ export default function Flashcard() {
                                                 width: '100%',
                                                 height: '100%',
                                                 padding: 2,
-                                                boxSizing: "border-box",
-                                                backfaceVisibility: "hidden",
-                                                display: "flex",
+                                                boxSizing: 'border-box',
+                                                backfaceVisibility: 'hidden',
+                                                display: 'flex',
                                                 justifyContent: 'center',
-                                                alignItems: "center",
+                                                alignItems: 'center',
+                                                textAlign: 'center',
+                                                borderRadius: '8px',
                                             },
                                             '& > div > div:nth-of-type(2)': {
                                                 transform: 'rotateY(180deg)',
@@ -93,12 +108,12 @@ export default function Flashcard() {
                                         }}>
                                             <div>
                                                 <div>
-                                                    <Typography variant="h5" component="div">
+                                                    <Typography variant="h6" component="div">
                                                         {flashcard.front}
                                                     </Typography>
                                                 </div>
                                                 <div>
-                                                    <Typography variant="h5" component="div">
+                                                    <Typography variant="h6" component="div">
                                                         {flashcard.back}
                                                     </Typography>
                                                 </div>
@@ -110,9 +125,13 @@ export default function Flashcard() {
                         </Grid>
                     ))
                 ) : (
-                    <Typography variant="h6" component="div">
-                        No flashcards available.
-                    </Typography>
+                    <Grid item xs={12}>
+                        <Box sx={{ textAlign: 'center', mt: 4 }}>
+                            <Typography variant="h6">
+                                No flashcards available. Please create some to get started!
+                            </Typography>
+                        </Box>
+                    </Grid>
                 )}
             </Grid>
         </Container>
