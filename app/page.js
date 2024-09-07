@@ -123,7 +123,7 @@ export default function Home() {
             <Card sx={{ height: '100%' }}>
               <CardContent>
                 <Typography variant="h6" component="div">Smart Flashcards</Typography>
-                <Typography variant="body2">Automatically generate smart flashcards from your input text. It&apos;s never been easier.</Typography>
+                <Typography variant="body2">Automatically generate smart flashcards from your input text. Its never been easier.</Typography>
               </CardContent>
               <CardActions>
                 <Button size="small" color="primary">Learn More</Button>

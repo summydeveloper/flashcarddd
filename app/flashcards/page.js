@@ -66,7 +66,7 @@ export default function FlashCards() {
         {flashCards.length === 0 && (
           <Box sx={{ width: '100%', textAlign: 'center', mt: 4 }}>
             <Typography variant="h6">
-              You don&apos;t have any flashcards yet. Create some to get started!
+              You dont have any flashcards yet. Create some to get started!
             </Typography>
             
 
